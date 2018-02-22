@@ -130,7 +130,9 @@ export default class Video extends Component {
 
   _onPlaybackRateChange = (event) => {
     if (this.state.showPoster && (event.nativeEvent.playbackRate !== 0)) {
-      this.setState({showPoster: false});
+      setTimeout(() => {
+        this.setState({ showPoster: false });
+      }, 200);
     }
 
     if (this.props.onPlaybackRateChange) {
@@ -211,35 +213,27 @@ export default class Video extends Component {
       onAudioBecomingNoisy: this._onAudioBecomingNoisy,
     });
 
-    if (this.props.poster && this.state.showPoster) {
-      const posterStyle = {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        right: 0,
-        bottom: 0,
-        resizeMode: 'contain',
-      };
-
-      return (
-        <View style={nativeProps.style}>
-          <RCTVideo
-            ref={this._assignRoot}
-            {...nativeProps}
-          />
-          <Image
-            style={posterStyle}
-            source={{uri: this.props.poster}}
-          />
-        </View>
-      );
-    }
+    const posterStyle = {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      resizeMode: 'contain',
+      opacity: this.state.showPoster ? 1 : 0
+    };
 
     return (
-      <RCTVideo
-        ref={this._assignRoot}
-        {...nativeProps}
-      />
+      <View style={nativeProps.style}>
+        <RCTVideo
+          ref={this._assignRoot}
+          {...nativeProps}
+        />
+        {this.props.poster && <Image
+          style={posterStyle}
+          source={{ uri: this.props.poster }}
+        />}
+      </View>
     );
   }
 }
