@@ -167,7 +167,7 @@ export default class Video extends Component {
     if (this.state.showPoster && (event.nativeEvent.playbackRate !== 0)) {
       setTimeout(() => {
         this.setState({ showPoster: false });
-      }, 200);
+      }, 400);
     }
 
     if (this.props.onPlaybackRateChange) {
@@ -256,7 +256,7 @@ export default class Video extends Component {
       top: 0,
       right: 0,
       bottom: 0,
-      resizeMode: 'contain',
+      resizeMode: 'cover',
       opacity: this.state.showPoster ? 1 : 0
     };
 
